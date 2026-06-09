@@ -1,0 +1,54 @@
+# Dependencies
+node_modules/
+
+# Build outputs (Vite / electron-vite)
+out/
+dist/
+
+# electron-builder cache & working dirs
+dist/win-unpacked/
+dist/mac/
+dist/linux-unpacked/
+dist/__uninstaller*
+*.blockmap
+
+# Electron builder binaries cache (downloaded at build time)
+node_modules/.cache/
+
+# Vite cache
+.vite/
+
+# TypeScript build info
+*.tsbuildinfo
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+dev_output.txt
+
+# Runtime data / app user data (stored in %APPDATA%, not repo)
+*.db
+*.sqlite
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor directories
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.suo
+*.user
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+# Electron dev tools
+.electron/
