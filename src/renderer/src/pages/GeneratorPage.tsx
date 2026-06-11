@@ -248,11 +248,36 @@ export function GeneratorPage({ onReportReady }: GeneratorPageProps): React.Reac
                         <div className="text-sm font-medium text-text truncate">{repo.name}</div>
                         <div className="text-xs text-text-subtle truncate">{repo.path}</div>
                       </div>
-                      {repo.currentBranch && (
-                        <span className="text-xs bg-border px-2 py-0.5 rounded-full text-text-subtle flex-shrink-0">
-                          {repo.currentBranch}
-                        </span>
-                      )}
+                      {/* Show selected branches (or fallback to currentBranch) */}
+                      {(() => {
+                        const repoData = branchesPerRepo[repo.path]
+                        const selected = repoData?.selected ?? []
+                        // Fallback: repo not yet expanded — show HEAD branch
+                        if (!repoData || selected.length === 0) {
+                          return repo.currentBranch ? (
+                            <span className="text-xs bg-border px-2 py-0.5 rounded-full text-text-subtle flex-shrink-0">
+                              {repo.currentBranch}
+                            </span>
+                          ) : null
+                        }
+                        const MAX_VISIBLE = 2
+                        const visible = selected.slice(0, MAX_VISIBLE)
+                        const overflow = selected.length - MAX_VISIBLE
+                        return (
+                          <div className="flex items-center gap-1 flex-shrink-0 max-w-[45%] flex-wrap justify-end">
+                            {visible.map(b => (
+                              <span key={b} className="text-xs bg-primary/15 border border-primary/30 text-primary px-2 py-0.5 rounded-full font-mono truncate max-w-[120px]" title={b}>
+                                {b}
+                              </span>
+                            ))}
+                            {overflow > 0 && (
+                              <span className="text-xs bg-border px-2 py-0.5 rounded-full text-text-subtle flex-shrink-0">
+                                +{overflow}
+                              </span>
+                            )}
+                          </div>
+                        )
+                      })()}
                     </button>
                     {/* Branch selector — shown below the repo card when selected */}
                     {isSelected && branchesPerRepo[repo.path] && (
